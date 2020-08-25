@@ -1,12 +1,24 @@
-![docker-publish-to-dh](https://github.com/swaglive/docker-image-template/workflows/docker-publish-to-dh/badge.svg)
+![docker-publish-to-dh](https://github.com/swaglive/docker-google-cloud-storage/workflows/docker-publish-to-dh/badge.svg)
 
-This template will:
-1. Trigger workflow when
-    - git push to branch `**`
-2. Build a docker image from this repo.
-3. Push docker images to different Docker Registry on branch `master`:
-    - [Docker Hub](#docker-hub)
+# Google Cloud Storage Proxy
 
-## [Docker Hub](https://hub.docker.com/)
-- [Create acceess token from Docker Hub](https://docs.docker.com/docker-hub/access-tokens/#create-an-access-token)
-    - Add `secrets.DOCKER_USERNAME`, `secrets.DOCKER_PASSWORD`: Setting -> Secrets -> New secret
+Allows for access to Google Cloud storage with credentials automatically proxied into the request.
+
+## Usage
+
+* Currently uses Instance Metadata permissions for access to Google Cloud Storage
+  * This means it inherits the permissions of the Instance when it was created (`scopes`)
+  * Requires to be run in Google Cloud (or have access to the Google Instance Metadata API)
+* The proxy will have access to any buckets/objects that the account has permission for (if it uses `storage-full` scope, then everything)
+
+```
+docker run -it --rm -p 80:80 swaglive/google-cloud-storage:0.1.0
+
+curl http://127.0.0.1/my-bucket/hello/world.mp4
+-> 200 OK
+```
+
+
+## TODO
+
+* https://docs.nginx.com/nginx/admin-guide/content-cache/content-caching/#byte-range-caching

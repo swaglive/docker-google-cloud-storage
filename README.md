@@ -18,6 +18,8 @@ curl http://127.0.0.1/my-bucket/hello/world.mp4
 -> 200 OK
 ```
 
+## REF
+* https://cloud.google.com/storage/docs/downloading-objects
 
 ## TODO
 
